@@ -1,0 +1,25 @@
+<h2 *ngIf="!id">Create Movie!</h2>
+<h2 *ngIf="id">Edit Movie!</h2>
+
+<div *ngIf="id">
+    <app-form-movie 
+    [model]="model"
+    *ngIf="model"
+    [nonSelectedGenres]="nonSelectedGenres"
+    [selectedGenres]="selectedGenres"
+    [nonSelectedMovieTheaters]="nonSelectedMovieTheaters"
+    [selectedMovieTheaters]="selectedMovieTheaters"
+    [selectedActors]="selectedActors"
+    [nonSelectedGenres]="nonSelectedGenres"
+    [nonSelectedMovieTheaters]="nonSelectedMovieTheaters"
+    (ononSubmit)="onSubmit($event)"></app-form-movie>
+</div>
+
+<div *ngIf="!id">
+    <app-form-movie 
+    *ngIf="nonSelectedGenres"
+    [nonSelectedGenres]="nonSelectedGenres" 
+    [nonSelectedMovieTheaters]="nonSelectedMovieTheaters"
+    (ononSubmit)="onSubmit($event)"></app-form-movie>
+</div>
+

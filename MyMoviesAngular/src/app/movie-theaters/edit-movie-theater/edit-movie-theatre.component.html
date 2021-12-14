@@ -1,0 +1,8 @@
+<h2 *ngIf="!id">Create Movie Theatre!</h2>
+<h2 *ngIf="id">Edit Movie Theatre!</h2>
+
+<app-movie-theater-form *ngIf="model" [model]="model" (ononSubmit)="onSubmit($event)"></app-movie-theater-form>
+
+<div *ngIf="!id">
+    <app-movie-theater-form (ononSubmit)="onSubmit($event)"></app-movie-theater-form>
+</div>

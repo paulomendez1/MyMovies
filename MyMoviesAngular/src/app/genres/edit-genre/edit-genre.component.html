@@ -1,0 +1,15 @@
+<h2 *ngIf="!id">Create Genre</h2>
+<h2 *ngIf="id">Edit Genre : {{title}}</h2>
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name*</mat-label>
+        <input formControlName="name" matInput/>
+        <mat-error *ngIf="form.invalid">{{getErrorMsgFieldName()}}</mat-error>
+    </mat-form-field>
+</form>
+
+
+<button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">Save Changes</button>
+<a mat-stroked-button routerLink="/genres">Cancel</a>

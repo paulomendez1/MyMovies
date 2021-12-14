@@ -1,0 +1,10 @@
+<h2 *ngIf="!id">Create Actor!</h2>
+<h2 *ngIf="id">Edit Actor!</h2>
+
+<app-form-actor *ngIf="model" [model]="model" 
+(ononSubmit)="onSubmit($event)"></app-form-actor>
+
+<div *ngIf="!id">
+<app-form-actor (ononSubmit)="onSubmit($event)"></app-form-actor>
+</div>
+

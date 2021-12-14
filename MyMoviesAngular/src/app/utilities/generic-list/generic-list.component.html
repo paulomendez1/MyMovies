@@ -1,0 +1,17 @@
+
+<div *ngIf=!list>
+    <span #loading>
+        <ng-content select="[loading]"></ng-content>
+    </span>
+    <span *ngIf="!loading.innerHTML.trim()">
+        <img src="https://c.tenor.com/I6kN-6X7nhAAAAAi/loading-buffering.gif">
+    </span>
+</div>
+
+<div *ngIf="list?.length == 0" style="margin-top: 1rem;">
+    <h2>There are not records to display!</h2>
+</div>
+
+<ng-container *ngIf="list?.length>0 && list">
+    <ng-content select="[content]"></ng-content>
+</ng-container>
