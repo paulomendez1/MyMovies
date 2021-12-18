@@ -13,7 +13,8 @@ Back-End: .NET 5.0 API
 DB: SQL Server 2018 (Included in repository)
 
 Preview:
-![ScreenPage](https://user-images.githubusercontent.com/85239081/146033285-caa39274-2639-4c5b-b694-332aaf4b0b1c.JPG)
+
+![ScreenPage](https://user-images.githubusercontent.com/85239081/146622127-c6f3c363-0160-487e-8db4-6d586fb3ffb3.JPG)
 
 ![ScreenPage2](https://user-images.githubusercontent.com/85239081/146033304-59530a12-e3b2-4901-8f82-95c4a3aa4c74.JPG)
 
