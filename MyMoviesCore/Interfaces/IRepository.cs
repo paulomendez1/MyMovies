@@ -15,7 +15,7 @@ namespace MyMoviesCore.Interfaces
 
         Task Insert(T entity);
 
-        void Update(T entity);
+        Task Update(T entity);
 
         Task<bool> Delete(int id);
     } 

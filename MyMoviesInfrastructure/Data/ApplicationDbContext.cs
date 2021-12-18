@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyMoviesCore.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyMoviesInfrastructure.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
@@ -37,6 +38,7 @@ namespace MyMoviesInfrastructure.Data
         public DbSet<MovieActor> MoviesActors { get; set; }
         public DbSet<MovieGenre> MoviesGenres { get; set; }
         public DbSet<MovieMovieteather> MoviesMovietheaters { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
     }
 }

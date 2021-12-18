@@ -17,8 +17,12 @@ namespace MyMoviesCore.DTOs
         public bool InTheaters { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string Poster { get; set; }
+        public double AverageVote { get; set; }
+        public double UserVote { get; set; }
         public List<GenreDTO> Genres { get; set; }
         public List<MovieTheaterDTO> MovieTheaters { get; set; }
         public List<ActorMovieDTO> Actors { get; set; }
+
+
     }
 }

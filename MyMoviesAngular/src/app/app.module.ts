@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2'
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +32,13 @@ import { ActorsAutocompleteComponent } from './actors/actors-autocomplete/actors
 import { FormActorComponent } from './actors/form-actor/form-actor.component';
 import { MovieTheaterFormComponent } from './movie-theaters/movie-theater-form/movie-theater-form.component';
 import { FormMovieComponent } from './movies/form-movie/form-movie.component';
-import { MovieDetailsComponent } from './movies/movie-details/movie-details.component'
+import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
+import { AuthorizeViewComponent } from './security/authorize-view/authorize-view.component';
+import { LoginComponent } from './security/login/login.component';
+import { RegisterComponent } from './security/register/register.component';
+import { FormAuthenticationComponent } from './security/form-authentication/form-authentication.component';
+import { DisplayErrorsComponent } from './utilities/display-errors/display-errors.component'
+import { JwtInterceptorService } from './security/jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +64,12 @@ import { MovieDetailsComponent } from './movies/movie-details/movie-details.comp
     FormActorComponent,
     MovieTheaterFormComponent,
     FormMovieComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    AuthorizeViewComponent,
+    LoginComponent,
+    RegisterComponent,
+    FormAuthenticationComponent,
+    DisplayErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +85,12 @@ import { MovieDetailsComponent } from './movies/movie-details/movie-details.comp
     SweetAlert2Module.forRoot()
   ],
   providers: [
-    LoadImgComponent
+    LoadImgComponent,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptorService,
+    multi: true
+  }
   ],
   bootstrap: [AppComponent]
 })
