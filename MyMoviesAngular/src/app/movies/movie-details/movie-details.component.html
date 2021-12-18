@@ -7,7 +7,7 @@
             <mat-chip *ngFor="let genre of movie.genres" [routerLink]="['/movies/filter']" [queryParams]="{genreId : genre.id}">
                 {{genre.name}}
             </mat-chip>
-        </mat-chip-list> | {{releaseDate.toDateString()}} | Average: 0.0 | Your Vote: 0.0
+        </mat-chip-list> | {{releaseDate.toDateString()}} | Average: {{movie.averageVote}} | Your Vote: <app-rating (onRating)="onRating($event)" [selectedRate] = "movie.userVote"></app-rating>
          </div>
 
         <div style="display: flex;"> 

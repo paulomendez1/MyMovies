@@ -13,6 +13,8 @@ export interface movieDTO {
     genres : GenreDTO[];
     movieTheaters: MovieTheaterDTO[];
     actors : ActorMovieDTO[];
+    averageVote : number;
+    userVote : number;
 }
 
 export interface movieCreationDTO {

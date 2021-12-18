@@ -44,7 +44,7 @@ namespace MyMoviesInfrastructure.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             _entities.Update(entity);
             _context.SaveChanges();
