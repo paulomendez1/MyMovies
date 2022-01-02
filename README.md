@@ -14,7 +14,10 @@ DB: SQL Server 2018 (Included in repository)
 
 Preview:
 
-![ScreenPage](https://user-images.githubusercontent.com/85239081/146622127-c6f3c363-0160-487e-8db4-6d586fb3ffb3.JPG)
+Movie details:
+![project1](https://user-images.githubusercontent.com/85239081/147890539-d708702a-29d2-4a31-85b0-b5c4fb3f04f9.JPG)
+Home:
+![project2](https://user-images.githubusercontent.com/85239081/147890540-15db738d-6ce6-4337-8fec-ca99ccff809f.JPG)
+Responsive design:
 
-![ScreenPage2](https://user-images.githubusercontent.com/85239081/146033304-59530a12-e3b2-4901-8f82-95c4a3aa4c74.JPG)
-
+![project3](https://user-images.githubusercontent.com/85239081/147890543-1a790ecb-a7c2-498d-bd95-a6a751bf1c62.JPG)
