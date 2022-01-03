@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2'
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatMenuModule} from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +41,7 @@ import { RegisterComponent } from './security/register/register.component';
 import { FormAuthenticationComponent } from './security/form-authentication/form-authentication.component';
 import { DisplayErrorsComponent } from './utilities/display-errors/display-errors.component'
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -82,7 +85,9 @@ import { JwtInterceptorService } from './security/jwt-interceptor.service';
     MarkdownModule.forRoot(),
     LeafletModule,
     HttpClientModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    FlexLayoutModule,
+    MatMenuModule
   ],
   providers: [
     LoadImgComponent,
