@@ -51,7 +51,10 @@ namespace MyMoviesAPI
                 options.AddDefaultPolicy(builder =>
                 {
                     builder.WithOrigins("http://localhost:4200/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-                    .WithExposedHeaders(new string[] {"totalAmountOfRecords"});
+                    .WithExposedHeaders(new string[] {"totalAmountOfRecords"})
+                     .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
                 });
             });
 
@@ -94,6 +97,14 @@ namespace MyMoviesAPI
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("IsAdmin", policy => policy.RequireClaim("role", "admin"));
+            });
+
+            services.Configure<IdentityOptions>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+                opts.Password.RequiredLength = 8;
+
+                opts.SignIn.RequireConfirmedEmail = true;
             });
         }
 

@@ -41,6 +41,8 @@ import { RegisterComponent } from './security/register/register.component';
 import { FormAuthenticationComponent } from './security/form-authentication/form-authentication.component';
 import { DisplayErrorsComponent } from './utilities/display-errors/display-errors.component'
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
+import { ForgotpwComponent } from './security/forgotpw/forgotpw.component';
+import { ResetpwComponent } from './security/resetpw/resetpw.component';
 
 
 @NgModule({
@@ -72,7 +74,9 @@ import { JwtInterceptorService } from './security/jwt-interceptor.service';
     LoginComponent,
     RegisterComponent,
     FormAuthenticationComponent,
-    DisplayErrorsComponent
+    DisplayErrorsComponent,
+    ForgotpwComponent,
+    ResetpwComponent
   ],
   imports: [
     BrowserModule,

@@ -16,14 +16,15 @@ export class RegisterComponent implements OnInit {
 
   errors : string[] = []
 
+  emailsent= false;
+
   ngOnInit(): void {
   }
 
   register(userCredentials: userCredentials){
     this.errors= [];
     this.securityService.register(userCredentials).subscribe(authenticationResponse => {
-      this.securityService.saveToken(authenticationResponse)
-      this.router.navigate(['/'])
+      this.emailsent=true;
     }, error => this.errors = parseWebAPIErrors(error));
   }
 
