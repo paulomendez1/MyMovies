@@ -71,13 +71,16 @@ namespace MyMoviesAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("Create")]
+        [HttpPost("Create", Name ="CreateUserURL")]
         public async Task<ActionResult<AuthenticationResponse>> CreateAccount([FromBody] UserCredentials userCredentials) 
         {
             var user = new IdentityUser { UserName = userCredentials.Email, Email = userCredentials.Email };
             var result = await _userManager.CreateAsync(user, userCredentials.Password);
             if (result.Succeeded)
             {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.RouteUrl("ConfirmEmail", new { userId = user.Id, code = token }, protocol: HttpContext.Request.Scheme);
+                EmailService.SendRegisterEmail(userCredentials.Email, callbackUrl);
                 return await BuildToken(userCredentials);
             }
             else
@@ -85,6 +88,70 @@ namespace MyMoviesAPI.Controllers
                 return BadRequest(result.Errors);
             }
         }
+
+        [HttpGet("ConfirmEmail", Name = "ConfirmEmail")]
+        public async Task<ActionResult<AuthenticationResponse>> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return NotFound("Invalid Link");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound("The user does not exists");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+
+            if (result.Succeeded)
+            {
+                return Ok("Email confirmed!");
+            }
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("ForgotPw", Name = "ForgotPw")]
+        public async Task<ActionResult<AuthenticationResponse>> ForgotPw([FromBody] ResetPwDTO resetPwDTO)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPwDTO.Email);
+            if (user == null)
+            {
+                return BadRequest("User doest not exists");
+            }
+            try
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.RouteUrl("ResetPw", new { userId = resetPwDTO.Email, code = token }, protocol: HttpContext.Request.Scheme);
+                EmailService.SendRegisterEmail(resetPwDTO.Email, callbackUrl);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("ResetPw", Name = "ResetPw")]
+        public async Task<ActionResult<AuthenticationResponse>> ResetPw(string userId, string code)
+        {
+            return Redirect("http://localhost:4200/resetpw?" + $"userId={userId}" + $"&code={code}");
+        }
+
+        [HttpPost("ResetPassword", Name = "ResetPassword")]
+        public async Task<ActionResult<AuthenticationResponse>> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPasswordDTO.Email);
+            _userManager.ResetPasswordAsync(user, resetPasswordDTO.Token, resetPasswordDTO.Password);
+            _context.SaveChanges();
+            return Ok("Password has been changed!");
+        }
+
 
         private async Task<AuthenticationResponse> BuildToken(UserCredentials userCredentials)
         {
@@ -117,7 +184,7 @@ namespace MyMoviesAPI.Controllers
         public async Task<ActionResult<AuthenticationResponse>> LogIn([FromBody] UserCredentials userCredentials)
         {
             var result = await _signInManager.PasswordSignInAsync(userCredentials.Email, userCredentials.Password, isPersistent: false, lockoutOnFailure: false);
-
+            var user = _signInManager.UserManager.FindByEmailAsync(userCredentials.Email);
 
             if (result.Succeeded)
             {
@@ -125,6 +192,19 @@ namespace MyMoviesAPI.Controllers
             }
             else
             {
+                try
+                {
+                    if (!user.Result.EmailConfirmed)
+                    {
+                        return BadRequest("Invalid login attempt. You must have a confirmed email account.");
+                    }
+                }
+                catch
+                {
+                    return BadRequest("Incorrect Login");
+                }
+                
+                
                 return BadRequest("Incorrect Login");
             }
          }

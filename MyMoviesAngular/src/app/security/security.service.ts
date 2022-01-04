@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { authenticationResponse } from './security.model';
 import { userCredentials} from './security.model'
+import {resetPwCredentials} from './security.model'
+import {newPwCredentials} from './security.model'
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +60,14 @@ export class SecurityService {
 
   login(userCredentials: userCredentials) : Observable<authenticationResponse> {
     return this.http.post<authenticationResponse>(this.apiURL + "/login", userCredentials)
+  }
+
+  forgotpw(resetPwCredentials: resetPwCredentials) {
+    return this.http.post<authenticationResponse>(this.apiURL + "/forgotpw", resetPwCredentials)
+  }
+
+  resetpassword(resetPwCredentials: newPwCredentials) {
+    return this.http.post<authenticationResponse>(this.apiURL + "/resetpassword", resetPwCredentials)
   }
 
   saveToken(authenticationResponse : authenticationResponse){

@@ -1,0 +1,17 @@
+<h3>Forgot Password</h3>
+
+<form [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput/>
+        <mat-error>{{getEmailErrorMsg()}}</mat-error>
+    </mat-form-field>
+    <div>
+        <button mat-flat-button color="primary" (click)="forgotPw()">
+            Send Email
+        </button>
+        <a mat-stroked-button routerLink="/">
+            Cancel
+        </a>
+    </div>
+</form>

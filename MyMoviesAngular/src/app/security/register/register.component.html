@@ -1,2 +1,6 @@
 <app-display-errors [errors]="errors"></app-display-errors>
-<app-form-authentication (onSubmit)="register($event)">
+<app-form-authentication *ngIf="!emailsent" (onSubmit)="register($event)">
+
+<h2 *ngIf="emailsent">
+    Confirmation Email has been sent to your email!
+</h2>
