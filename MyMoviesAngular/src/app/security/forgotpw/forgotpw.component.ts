@@ -4,6 +4,7 @@ import { SecurityService } from '../security.service';
 import { resetPwCredentials, userCredentials } from '../security.model'
 import { parseWebAPIErrors } from 'src/app/utilities/utilities';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forgotpw',
@@ -52,6 +53,7 @@ export class ForgotpwComponent implements OnInit {
     };
     this.errors = [];
     this.securityService.forgotpw(this.resetPwCredential).subscribe(authenticationResponse => {
+        Swal.fire('Success', 'An email to reset your password has been sent!', "success");
         this.router.navigate(['/'])
       }, error => this.errors = parseWebAPIErrors(error))
   }
