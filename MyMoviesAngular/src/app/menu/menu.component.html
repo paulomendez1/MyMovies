@@ -1,4 +1,7 @@
 <mat-toolbar color="primary">
+    <button mat-button class="sidenav-toggle" (click)="toggleSideNav.emit()">
+        <mat-icon>menu</mat-icon>
+    </button>
     <span>
         <a class="home" routerLink="" mat-button>
             <img src="../../assets/903cc01705d94282af710707c3ff0eee (2).png" alt="">
@@ -51,9 +54,6 @@
         </app-authorize-view>
 
     </div>
-    <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
-        <mat-icon>menu</mat-icon>
-    </button>
 </mat-toolbar>
 
 <mat-menu x-position="before" #menu="matMenu">

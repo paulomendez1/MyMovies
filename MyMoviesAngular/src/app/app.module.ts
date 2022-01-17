@@ -4,6 +4,7 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2'
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatMenuModule} from '@angular/material/menu';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,6 +44,7 @@ import { DisplayErrorsComponent } from './utilities/display-errors/display-error
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
 import { ForgotpwComponent } from './security/forgotpw/forgotpw.component';
 import { ResetpwComponent } from './security/resetpw/resetpw.component';
+import { SideNavComponent } from './menu/side-nav/side-nav.component';
 
 
 @NgModule({
@@ -76,7 +78,8 @@ import { ResetpwComponent } from './security/resetpw/resetpw.component';
     FormAuthenticationComponent,
     DisplayErrorsComponent,
     ForgotpwComponent,
-    ResetpwComponent
+    ResetpwComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ import { ResetpwComponent } from './security/resetpw/resetpw.component';
     HttpClientModule,
     SweetAlert2Module.forRoot(),
     FlexLayoutModule,
-    MatMenuModule
+    MatMenuModule,
+    DragDropModule
   ],
   providers: [
     LoadImgComponent,
