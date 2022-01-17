@@ -23,7 +23,7 @@ namespace MyMoviesInfrastructure.Helpers
             msg.Body = new TextPart("plain")
             {
                 Text = $@"Hi, follow this link to confirm your account:
-                        ${ConfirmationLink}
+                       {ConfirmationLink}
 
                 If you don't confirm your account, you will not be able to log in into the web,
                 Regards!,

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,9 +15,11 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MyMoviesAPI.Controllers
 {
@@ -121,13 +124,15 @@ namespace MyMoviesAPI.Controllers
             var user = await _userManager.FindByEmailAsync(resetPwDTO.Email);
             if (user == null)
             {
-                return BadRequest("User doest not exists");
+                return BadRequest("User does not exists");
             }
             try
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.RouteUrl("ResetPw", new { userId = resetPwDTO.Email, code = token }, protocol: HttpContext.Request.Scheme);
-                EmailService.SendRegisterEmail(resetPwDTO.Email, callbackUrl);
+                byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(token);
+                var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
+                var link = Url.RouteUrl("ResetPw", new { userId = user.Email, code = codeEncoded }, protocol: HttpContext.Request.Scheme);
+                EmailService.SendRegisterEmail(resetPwDTO.Email, link);
                 return Ok();
             }
             catch (Exception ex)
@@ -138,6 +143,7 @@ namespace MyMoviesAPI.Controllers
         }
 
         [HttpGet("ResetPw", Name = "ResetPw")]
+        [AllowAnonymous]
         public async Task<ActionResult<AuthenticationResponse>> ResetPw(string userId, string code)
         {
             return Redirect("http://localhost:4200/resetpw?" + $"userId={userId}" + $"&code={code}");
@@ -147,9 +153,17 @@ namespace MyMoviesAPI.Controllers
         public async Task<ActionResult<AuthenticationResponse>> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
         {
             var user = await _userManager.FindByEmailAsync(resetPasswordDTO.Email);
-            _userManager.ResetPasswordAsync(user, resetPasswordDTO.Token, resetPasswordDTO.Password);
-            _context.SaveChanges();
-            return Ok("Password has been changed!");
+            var codeDecodedBytes = WebEncoders.Base64UrlDecode(resetPasswordDTO.Token);
+            var codeDecoded = Encoding.UTF8.GetString(codeDecodedBytes);
+            var result= await _userManager.ResetPasswordAsync(user, codeDecoded, resetPasswordDTO.Password);
+            if (result.Succeeded)
+            {
+                return Ok("Password has been changed!");
+            }
+            else
+            {
+                return BadRequest("An error ocurrs");
+            }
         }
 
 

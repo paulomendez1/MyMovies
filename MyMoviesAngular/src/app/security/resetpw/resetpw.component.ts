@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { parseWebAPIErrors } from 'src/app/utilities/utilities';
+import Swal from 'sweetalert2';
 import { newPwCredentials } from '../security.model';
 import { SecurityService } from '../security.service';
 
@@ -73,7 +74,7 @@ resetpw(){
   };
   this.errors = [];
   this.securityService.resetpassword(this.newPwCredential).subscribe(authenticationResponse => {
-      this.router.navigate(['/'])
+    Swal.fire('Success', 'An email to reset your password has been sent!', "success");
     }, error =>  console.log(error))
 }
 }
